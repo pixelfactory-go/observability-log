@@ -220,7 +220,7 @@ func filterFrames(frames []sentry.Frame) []sentry.Frame {
 			continue
 		}
 		// Skip zapsentry code in the frames.
-		if strings.HasPrefix(frame.Module, "gitlab.qonto.co/cbs/pkg/observability") &&
+		if strings.HasPrefix(frame.Module, "go.pixelfactory.io/pkg/observability/log") &&
 			!strings.HasSuffix(frame.Module, "_test") {
 			continue
 		}
