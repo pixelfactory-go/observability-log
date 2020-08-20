@@ -81,7 +81,7 @@ func newZapLogger(core zapcore.Core) *zap.Logger {
 	return zap.New(core, zap.AddCaller(), zap.AddCallerSkip(1))
 }
 
-// Debug logs an info msg with fields.
+// Debug logs a debug msg with fields.
 func (l *logger) Debug(msg string, fields ...zapcore.Field) {
 	l.logger.Debug(msg, fields...)
 }
@@ -91,7 +91,7 @@ func (l *logger) Info(msg string, fields ...zapcore.Field) {
 	l.logger.Info(msg, fields...)
 }
 
-// Warn logs an error msg with fields.
+// Warn logs an warning msg with fields.
 func (l *logger) Warn(msg string, fields ...zapcore.Field) {
 	l.logger.Warn(msg, fields...)
 }
