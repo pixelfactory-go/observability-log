@@ -1,4 +1,4 @@
-package log_test
+package fields_test
 
 import (
 	"net/url"
@@ -7,7 +7,6 @@ import (
 	"github.com/stretchr/testify/require"
 	"go.uber.org/zap"
 
-	"go.pixelfactory.io/pkg/observability/log"
 	"go.pixelfactory.io/pkg/observability/log/fields"
 )
 
@@ -15,7 +14,7 @@ func Test_URL(t *testing.T) {
 	t.Parallel()
 	is := require.New(t)
 	u, _ := url.Parse("http://test/search?q=dotnet")
-	urlField := log.URL(u)
+	urlField := fields.URL(u)
 	is.NotEmpty(urlField)
-	is.Equal(urlField, zap.Object("url", &fields.URL{URL: u}))
+	is.Equal(urlField, zap.Object("url", &fields.URLField{URL: u}))
 }

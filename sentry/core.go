@@ -109,7 +109,7 @@ func (c *Core) Write(entry zapcore.Entry, fields []zapcore.Field) error {
 
 	// When set, relevant Sentry interfaces are added.
 	var err error
-	var svc *ecsfields.Service
+	var svc *ecsfields.ServiceField
 
 	// processField processes the given field.
 	// When false is returned, the whole entry is to be skipped.
@@ -117,7 +117,7 @@ func (c *Core) Write(entry zapcore.Entry, fields []zapcore.Field) error {
 		// Look for "service" key.
 		switch field.Key {
 		case serviceKey:
-			if s, ok := field.Interface.(*ecsfields.Service); ok {
+			if s, ok := field.Interface.(*ecsfields.ServiceField); ok {
 				svc = s
 			} else {
 				field.AddTo(encoder)
