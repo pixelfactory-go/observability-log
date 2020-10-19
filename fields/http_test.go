@@ -1,4 +1,4 @@
-package log_test
+package fields_test
 
 import (
 	"io"
@@ -9,7 +9,6 @@ import (
 	"github.com/stretchr/testify/require"
 	"go.uber.org/zap"
 
-	"go.pixelfactory.io/pkg/observability/log"
 	"go.pixelfactory.io/pkg/observability/log/fields"
 )
 
@@ -17,9 +16,9 @@ func Test_HTTPRequest(t *testing.T) {
 	t.Parallel()
 	is := require.New(t)
 	req := httptest.NewRequest("GET", "http://test/foo", nil)
-	reqField := log.HTTPRequest(req)
+	reqField := fields.HTTPRequest(req)
 	is.NotEmpty(reqField)
-	is.Equal(reqField, zap.Object("http.request", &fields.HTTPRequest{Request: req}))
+	is.Equal(reqField, zap.Object("http.request", &fields.HTTPRequestField{Request: req}))
 }
 
 func Test_HTTPResponse(t *testing.T) {
@@ -37,7 +36,7 @@ func Test_HTTPResponse(t *testing.T) {
 	resp := w.Result()
 	// body, _ := ioutil.ReadAll(resp.Body)
 
-	respField := log.HTTPResponse(resp)
+	respField := fields.HTTPResponse(resp)
 	is.NotEmpty(respField)
-	is.Equal(respField, zap.Object("http.response", &fields.HTTPResponse{Response: resp}))
+	is.Equal(respField, zap.Object("http.response", &fields.HTTPResponseField{Response: resp}))
 }

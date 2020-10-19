@@ -11,6 +11,7 @@ import (
 	"go.uber.org/zap"
 
 	"go.pixelfactory.io/pkg/observability/log"
+	"go.pixelfactory.io/pkg/observability/log/fields"
 )
 
 func main() {
@@ -20,12 +21,12 @@ func main() {
 	logger.Debug("Debug Msg")
 	logger.Info("Info Msg")
 	logger.Warn("Warn Msg")
-	logger.Error("Error Msg", log.Error(fmt.Errorf("An error happened")))
+	logger.Error("Error Msg", fields.Error(fmt.Errorf("An error happened")))
 
 	// Read DSN from the environment.
 	dsn := os.Getenv("SENTRY_DSN")
 	if dsn == "" {
-		logger.Error("Failed to get a Sentry client", log.Error(errors.New("SENTRY_DSN is not set")))
+		logger.Error("Failed to get a Sentry client", fields.Error(errors.New("SENTRY_DSN is not set")))
 	}
 
 	// Instantiate a client.
@@ -35,7 +36,7 @@ func main() {
 		Environment:      "production",
 	})
 	if err != nil {
-		logger.Error("Failed to get a Sentry client", log.Error(err))
+		logger.Error("Failed to get a Sentry client", fields.Error(err))
 	}
 
 	// Using Sentry Core
@@ -47,7 +48,7 @@ func main() {
 
 	// Add Fields
 	// Fields must be added after logger creation
-	logger = logger.With(log.Service("myapp", "v1.0"))
+	logger = logger.With(fields.Service("myapp", "v1.0"))
 	defer logger.Sync()
 
 	client := http.Client{Timeout: 1 * time.Second}
@@ -55,14 +56,14 @@ func main() {
 	request, err := http.NewRequest("GET", "https://httpbin.org/delay/2", nil)
 	request.Header.Set("Content-Type", "application/json")
 	if err != nil {
-		logger.Error("An error happened while creating request", log.Error(err))
+		logger.Error("An error happened while creating request", fields.Error(err))
 	}
 
 	response, err := client.Do(request)
 	if err != nil {
-		logger.Fatal("An error happened while sending request", log.Error(err))
+		logger.Fatal("An error happened while sending request", fields.Error(err))
 	}
 
-	logger.Info("Sent Http Request", log.HTTPRequest(request))
-	logger.Info("Got Http Response", log.HTTPResponse(response))
+	logger.Info("Sent Http Request", fields.HTTPRequest(request))
+	logger.Info("Got Http Response", fields.HTTPResponse(response))
 }
