@@ -24,7 +24,7 @@ func setupObserver(level zap.AtomicLevel) (zap.Option, *observer.ObservedLogs) {
 	return opts, logs
 }
 
-func setupLogger() (log.Logger, *observer.ObservedLogs) {
+func setupLogger() (*log.DefaultLogger, *observer.ObservedLogs) {
 	level := zap.NewAtomicLevelAt(zapcore.DebugLevel)
 	obsOpts, logs := setupObserver(level)
 	return log.New(log.WithLevel("debug"), log.WithZapOption(obsOpts)), logs
