@@ -49,19 +49,17 @@ func main() {
 	// Add Fields
 	// Fields must be added after logger creation
 	logger = logger.With(fields.Service("myapp", "v1.0"))
-	defer logger.Sync()
 
 	client := http.Client{Timeout: 1 * time.Second}
-
 	request, err := http.NewRequest("GET", "https://httpbin.org/delay/2", nil)
 	request.Header.Set("Content-Type", "application/json")
 	if err != nil {
-		logger.Error("An error happened while creating request", fields.Error(err))
+		logger.Error("An error occurred while creating request", fields.Error(err))
 	}
 
 	response, err := client.Do(request)
 	if err != nil {
-		logger.Fatal("An error happened while sending request", fields.Error(err))
+		logger.Fatal("An error occurred while sending request", fields.Error(err))
 	}
 
 	logger.Info("Sent Http Request", fields.HTTPRequest(request))

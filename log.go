@@ -13,35 +13,33 @@ import (
 
 // Logger is a simplified abstraction of the zap.Logger
 type Logger interface {
-	Sync() error
 	Debug(msg string, fields ...zapcore.Field)
 	Info(msg string, fields ...zapcore.Field)
 	Warn(msg string, fields ...zapcore.Field)
 	Error(msg string, fields ...zapcore.Field)
 	Fatal(msg string, fields ...zapcore.Field)
 	Panic(msg string, fields ...zapcore.Field)
-	With(fields ...zapcore.Field) Logger
 }
 
-// logger delegates all calls to the underlying zap.Logger.
-type logger struct {
+// DefaultLogger delegates all calls to the underlying zap.Logger.
+type DefaultLogger struct {
 	level  *zap.AtomicLevel
 	logger *zap.Logger
 }
 
 // Option type
-type Option func(*logger)
+type Option func(*DefaultLogger)
 
 // WithLevel logger level option
 func WithLevel(level string) Option {
-	return func(l *logger) {
+	return func(l *DefaultLogger) {
 		l.level.SetLevel(GetZapLogLevel(level))
 	}
 }
 
 // WithSentry enables sentry
 func WithSentry(client *sentry.Client) Option {
-	return func(l *logger) {
+	return func(l *DefaultLogger) {
 		// Get Sentry zap Core that handle only Error level
 		sentryCore := zapsentry.NewCore(zapcore.ErrorLevel, client)
 		// NewTee creates a Core that duplicates log entries into two or more underlying Cores.
@@ -53,18 +51,18 @@ func WithSentry(client *sentry.Client) Option {
 
 // WithZapOption add fields.Service
 func WithZapOption(opts ...zap.Option) Option {
-	return func(l *logger) {
+	return func(l *DefaultLogger) {
 		l.logger = l.logger.WithOptions(opts...)
 	}
 }
 
 // New returns a new logger with default values.
-func New(opts ...Option) Logger {
+func New(opts ...Option) *DefaultLogger {
 	encoderConfig := ecszap.NewDefaultEncoderConfig()
 	atomicLevel := zap.NewAtomicLevelAt(zapcore.InfoLevel)
 	core := ecszap.NewCore(encoderConfig, os.Stdout, atomicLevel)
 
-	l := &logger{
+	l := &DefaultLogger{
 		logger: newZapLogger(core),
 		level:  &atomicLevel,
 	}
@@ -82,49 +80,49 @@ func newZapLogger(core zapcore.Core) *zap.Logger {
 }
 
 // Debug logs a debug msg with fields.
-func (l *logger) Debug(msg string, fields ...zapcore.Field) {
+func (l *DefaultLogger) Debug(msg string, fields ...zapcore.Field) {
 	l.logger.Debug(msg, fields...)
 }
 
 // Info logs an info msg with fields.
-func (l *logger) Info(msg string, fields ...zapcore.Field) {
+func (l *DefaultLogger) Info(msg string, fields ...zapcore.Field) {
 	l.logger.Info(msg, fields...)
 }
 
 // Warn logs an warning msg with fields.
-func (l *logger) Warn(msg string, fields ...zapcore.Field) {
+func (l *DefaultLogger) Warn(msg string, fields ...zapcore.Field) {
 	l.logger.Warn(msg, fields...)
 }
 
 // Error logs an error msg with fields.
-func (l *logger) Error(msg string, fields ...zapcore.Field) {
+func (l *DefaultLogger) Error(msg string, fields ...zapcore.Field) {
 	l.logger.Error(msg, fields...)
 }
 
 // Fatal logs a fatal error msg with fields and panics. Apps will have to recover if ever needed.
-func (l *logger) Fatal(msg string, fields ...zapcore.Field) {
+func (l *DefaultLogger) Fatal(msg string, fields ...zapcore.Field) {
 	// Calls panic, as zap.Fatal calls os.Exit and isn't recoverable.
 	l.Panic(msg, fields...)
 }
 
 // Panic logs a fatal error msg and fields and panics. Apps will have to recover if ever needed.
-func (l *logger) Panic(msg string, fields ...zapcore.Field) {
+func (l *DefaultLogger) Panic(msg string, fields ...zapcore.Field) {
 	l.logger.Panic(msg, fields...)
 }
 
 // With creates a child logger, and optionally adds some context fields to that logger.
-func (l *logger) With(fields ...zapcore.Field) Logger {
+func (l *DefaultLogger) With(fields ...zapcore.Field) *DefaultLogger {
 	clone := l.clone()
 	clone.logger = l.logger.With(fields...)
 	return clone
 }
 
 // Sync call zap.Logger Sync() method
-func (l *logger) Sync() error {
+func (l *DefaultLogger) Sync() error {
 	return l.logger.Sync()
 }
 
-func (l *logger) clone() *logger {
+func (l *DefaultLogger) clone() *DefaultLogger {
 	clone := *l
 	return &clone
 }

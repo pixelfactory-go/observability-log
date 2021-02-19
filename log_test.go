@@ -3,6 +3,7 @@ package log_test
 import (
 	"testing"
 
+	"github.com/getsentry/sentry-go"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -24,7 +25,7 @@ func setupObserver(level zap.AtomicLevel) (zap.Option, *observer.ObservedLogs) {
 	return opts, logs
 }
 
-func setupLogger() (log.Logger, *observer.ObservedLogs) {
+func setupLogger() (*log.DefaultLogger, *observer.ObservedLogs) {
 	level := zap.NewAtomicLevelAt(zapcore.DebugLevel)
 	obsOpts, logs := setupObserver(level)
 	return log.New(log.WithLevel("debug"), log.WithZapOption(obsOpts)), logs
@@ -78,7 +79,15 @@ func Test_New(t *testing.T) {
 	t.Parallel()
 	is := require.New(t)
 	logger, _ := setupLogger()
-	defer logger.Sync()
+
+	is.NotEmpty(logger)
+	is.Implements((*log.Logger)(nil), logger)
+}
+
+func Test_WithSentry(t *testing.T) {
+	t.Parallel()
+	is := require.New(t)
+	logger := log.New(log.WithSentry(&sentry.Client{}))
 
 	is.NotEmpty(logger)
 	is.Implements((*log.Logger)(nil), logger)
@@ -88,7 +97,6 @@ func Test_With(t *testing.T) {
 	t.Parallel()
 	is := require.New(t)
 	logger, logs := setupLogger()
-	defer logger.Sync()
 
 	logger = logger.With(zapStringField)
 	logger.Info("")
@@ -107,7 +115,6 @@ func Test_Debug(t *testing.T) {
 	t.Parallel()
 	is := require.New(t)
 	logger, logs := setupLogger()
-	defer logger.Sync()
 
 	logger.Debug(message)
 
@@ -124,7 +131,6 @@ func Test_Info(t *testing.T) {
 	t.Parallel()
 	is := require.New(t)
 	logger, logs := setupLogger()
-	defer logger.Sync()
 
 	logger.Info(message)
 
@@ -141,7 +147,6 @@ func Test_Warn(t *testing.T) {
 	t.Parallel()
 	is := require.New(t)
 	logger, logs := setupLogger()
-	defer logger.Sync()
 
 	logger.Warn(message)
 
@@ -158,7 +163,6 @@ func Test_Error(t *testing.T) {
 	t.Parallel()
 	is := require.New(t)
 	logger, logs := setupLogger()
-	defer logger.Sync()
 
 	logger.Error(message)
 
@@ -175,7 +179,6 @@ func Test_Fatal(t *testing.T) {
 	t.Parallel()
 	is := require.New(t)
 	logger, _ := setupLogger()
-	defer logger.Sync()
 
 	is.Panics(func() {
 		logger.Fatal("I should panic")
@@ -186,7 +189,6 @@ func Test_Panic(t *testing.T) {
 	t.Parallel()
 	is := require.New(t)
 	logger, logs := setupLogger()
-	defer logger.Sync()
 
 	is.Panics(func() {
 		logger.Panic(message)
@@ -199,4 +201,14 @@ func Test_Panic(t *testing.T) {
 		is.Equal(entry.Level, zap.PanicLevel)
 		is.Equal(message, entry.Message)
 	}
+}
+
+func Test_Sync(t *testing.T) {
+	t.Parallel()
+	is := require.New(t)
+	logger, _ := setupLogger()
+
+	err := logger.Sync()
+
+	is.NoError(err)
 }

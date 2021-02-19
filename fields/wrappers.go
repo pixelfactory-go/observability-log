@@ -103,17 +103,11 @@ func Any(key string, val interface{}) zap.Field {
 }
 
 // Error is a wrappers of zap.Error.
-// If given error is not empty and captureOpts is defined, the error will be captured in sentry.
-// The first argument of captureOpts is to send the error to sentry.
-// The second one is to wait an acknowledgement from sentry.
 func Error(err error) zap.Field {
-	return zap.NamedError("error", err)
+	return zap.Error(err)
 }
 
 // NamedError is a wrappers of zap.NamedError.
-// If given error is not empty and captureOpts is defined, the error will be captured in sentry.
-// The first argument of captureOpts is to send the error to sentry.
-// The second one is to wait an acknowledgement from sentry.
-func NamedError(key string, err error, captureOpts ...bool) zap.Field {
+func NamedError(key string, err error) zap.Field {
 	return zap.NamedError(key, err)
 }

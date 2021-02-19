@@ -93,6 +93,7 @@ func (c *Core) Check(entry zapcore.Entry, checked *zapcore.CheckedEntry) *zapcor
 	return checked
 }
 
+// nolint
 // Write converts entry to Sentry event and send it
 func (c *Core) Write(entry zapcore.Entry, fields []zapcore.Field) error {
 	// Create a Sentry Event.
