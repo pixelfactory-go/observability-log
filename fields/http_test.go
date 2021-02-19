@@ -26,7 +26,10 @@ func Test_HTTPResponse(t *testing.T) {
 	is := require.New(t)
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
-		io.WriteString(w, "<html><body>Hello Test!</body></html>")
+		_, err := io.WriteString(w, "<html><body>Hello Test!</body></html>")
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+		}
 	}
 
 	req := httptest.NewRequest("GET", "http://test/foo", nil)
