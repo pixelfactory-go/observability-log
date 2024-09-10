@@ -40,12 +40,14 @@ jobs:
         run: make fmt
 
       - name: Run golangci-lint
+        if: runner.os != 'Windows'
         uses: golangci/golangci-lint-action@v3
 
       - name: Run go test
         run: make test
 
       - name: Upload coverage to Codecov
+        if: runner.os != 'Windows'
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
