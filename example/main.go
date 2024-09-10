@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"net/http"
@@ -15,13 +16,12 @@ import (
 )
 
 func main() {
-
 	// Basic Usage (defaults to Info level)
 	logger := log.New()
 	logger.Debug("Debug Msg")
 	logger.Info("Info Msg")
 	logger.Warn("Warn Msg")
-	logger.Error("Error Msg", fields.Error(fmt.Errorf("An error happened")))
+	logger.Error("Error Msg", fields.Error(fmt.Errorf("an error happened")))
 
 	// Read DSN from the environment.
 	dsn := os.Getenv("SENTRY_DSN")
@@ -51,7 +51,7 @@ func main() {
 	logger = logger.With(fields.Service("myapp", "v1.0"))
 
 	client := http.Client{Timeout: 1 * time.Second}
-	request, err := http.NewRequest("GET", "https://httpbin.org/delay/2", nil)
+	request, err := http.NewRequestWithContext(context.Background(), http.MethodGet, "https://httpbin.org/delay/2", http.NoBody)
 	request.Header.Set("Content-Type", "application/json")
 	if err != nil {
 		logger.Error("An error occurred while creating request", fields.Error(err))
@@ -61,6 +61,8 @@ func main() {
 	if err != nil {
 		logger.Fatal("An error occurred while sending request", fields.Error(err))
 	}
+
+	defer response.Body.Close()
 
 	logger.Info("Sent Http Request", fields.HTTPRequest(request))
 	logger.Info("Got Http Response", fields.HTTPResponse(response))

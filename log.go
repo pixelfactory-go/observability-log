@@ -11,7 +11,7 @@ import (
 	zapsentry "go.pixelfactory.io/pkg/observability/log/sentry"
 )
 
-// Logger is a simplified abstraction of the zap.Logger
+// Logger is a simplified abstraction of the zap.Logger.
 type Logger interface {
 	Debug(msg string, fields ...zapcore.Field)
 	Info(msg string, fields ...zapcore.Field)
@@ -27,17 +27,17 @@ type DefaultLogger struct {
 	logger *zap.Logger
 }
 
-// Option type
+// Option type.
 type Option func(*DefaultLogger)
 
-// WithLevel logger level option
+// WithLevel logger level option.
 func WithLevel(level string) Option {
 	return func(l *DefaultLogger) {
 		l.level.SetLevel(GetZapLogLevel(level))
 	}
 }
 
-// WithSentry enables sentry
+// WithSentry enables sentry.
 func WithSentry(client *sentry.Client) Option {
 	return func(l *DefaultLogger) {
 		// Get Sentry zap Core that handle only Error level
@@ -49,7 +49,7 @@ func WithSentry(client *sentry.Client) Option {
 	}
 }
 
-// WithZapOption add fields.Service
+// WithZapOption add fields.Service.
 func WithZapOption(opts ...zap.Option) Option {
 	return func(l *DefaultLogger) {
 		l.logger = l.logger.WithOptions(opts...)
@@ -74,7 +74,7 @@ func New(opts ...Option) *DefaultLogger {
 	return l
 }
 
-// newZapLogger returns zap.Logger from zap Core
+// newZapLogger returns zap.Logger from zap Core.
 func newZapLogger(core zapcore.Core) *zap.Logger {
 	return zap.New(core, zap.AddCaller(), zap.AddCallerSkip(1))
 }
@@ -117,7 +117,7 @@ func (l *DefaultLogger) With(fields ...zapcore.Field) *DefaultLogger {
 	return clone
 }
 
-// Sync call zap.Logger Sync() method
+// Sync call zap.Logger Sync() method.
 func (l *DefaultLogger) Sync() error {
 	return l.logger.Sync()
 }
@@ -127,7 +127,7 @@ func (l *DefaultLogger) clone() *DefaultLogger {
 	return &clone
 }
 
-// GetZapLogLevel returns zap.AtomicLevel from string
+// GetZapLogLevel returns zap.AtomicLevel from string.
 func GetZapLogLevel(logLevel string) zapcore.Level {
 	level := zapcore.InfoLevel
 	switch logLevel {

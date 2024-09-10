@@ -23,7 +23,7 @@ func Bools(key string, val []bool) zap.Field {
 }
 
 // String is a wrappers of zap.String.
-func String(key string, val string) zap.Field {
+func String(key, val string) zap.Field {
 	return zap.String(key, val)
 }
 

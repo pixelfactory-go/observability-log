@@ -13,7 +13,10 @@ import (
 func Test_URL(t *testing.T) {
 	t.Parallel()
 	is := require.New(t)
-	u, _ := url.Parse("http://test/search?q=dotnet")
+
+	u, err := url.Parse("http://test/search?q=dotnet")
+	is.NoError(err)
+
 	urlField := fields.URL(u)
 	is.NotEmpty(urlField)
 	is.Equal(urlField, zap.Object("url", &fields.URLField{URL: u}))

@@ -163,12 +163,12 @@ func Test_Wrapper_Durations(t *testing.T) {
 func Test_Wrapper_Any(t *testing.T) {
 	t.Parallel()
 	is := require.New(t)
-	any := struct {
+	anyStruct := struct {
 		test string
 	}{test: "value"}
-	b := fields.Any("key", any)
+	b := fields.Any("key", anyStruct)
 	is.NotEmpty(b)
-	is.Equal(b, zap.Any("key", any))
+	is.Equal(b, zap.Any("key", anyStruct))
 }
 
 func Test_Wrapper_Error(t *testing.T) {
