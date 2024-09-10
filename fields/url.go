@@ -22,6 +22,6 @@ func (u *URLField) MarshalLogObject(enc zapcore.ObjectEncoder) error {
 
 // URL returns ECS url as zap.Field
 // https://www.elastic.co/guide/en/ecs/current/ecs-url.html
-func URL(url *url.URL) zapcore.Field {
-	return zap.Object("url", &URLField{URL: url})
+func URL(u *url.URL) zapcore.Field {
+	return zap.Object("url", &URLField{URL: u})
 }

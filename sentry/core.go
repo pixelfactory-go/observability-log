@@ -13,7 +13,7 @@ import (
 	ecsfields "go.pixelfactory.io/pkg/observability/log/fields"
 )
 
-// zapcore.Level to sentry.Level map
+// zapcore.Level to sentry.Level map.
 var zapLevelToSentrySeverity = map[zapcore.Level]sentry.Level{
 	zapcore.DebugLevel:  sentry.LevelDebug,
 	zapcore.InfoLevel:   sentry.LevelInfo,
@@ -24,29 +24,29 @@ var zapLevelToSentrySeverity = map[zapcore.Level]sentry.Level{
 	zapcore.FatalLevel:  sentry.LevelFatal,
 }
 
-// errorKey is zap.Field key for ecs.Error
+// errorKey is zap.Field key for ecs.Error.
 // https://github.com/elastic/ecs-logging-go-zap/blob/master/internal/error.go
 const errorKey = "error"
 
-// serviceKey is zap.Field key for fields.Service
+// serviceKey is zap.Field key for fields.Service.
 // https://github.com/elastic/ecs-logging-go-zap/blob/master/internal/error.go
 const serviceKey = "service"
 
-// Option type
+// Option type.
 type Option func(*Core)
 
 // DefaultSentryFlushTimeout is sentry flush timeout used in
-// sentry.Flush() when calling Core.Sync()
+// sentry.Flush() when calling Core.Sync().
 const DefaultSentryFlushTimeout = 5 * time.Second
 
-// SetFlushTimeout set sentry flush timeout
+// SetFlushTimeout set sentry flush timeout.
 func SetFlushTimeout(timeout time.Duration) Option {
 	return func(core *Core) {
 		core.sentryFlushTimeout = timeout
 	}
 }
 
-// Core struct
+// Core struct.
 type Core struct {
 	zapcore.LevelEnabler
 	client             *sentry.Client
@@ -93,8 +93,7 @@ func (c *Core) Check(entry zapcore.Entry, checked *zapcore.CheckedEntry) *zapcor
 	return checked
 }
 
-// nolint
-// Write converts entry to Sentry event and send it
+// Write converts entry to Sentry event and send it.
 func (c *Core) Write(entry zapcore.Entry, fields []zapcore.Field) error {
 	// Create a Sentry Event.
 	event := sentry.NewEvent()
@@ -162,7 +161,6 @@ func (c *Core) Write(entry zapcore.Entry, fields []zapcore.Field) error {
 		stacktrace := sentry.ExtractStacktrace(err)
 		if stacktrace == nil {
 			stacktrace = sentry.NewStacktrace()
-			// stacktrace.Frames = filterFrames(stacktrace.Frames)
 		}
 		// Handle wrapped errors for github.com/pingcap/errors and github.com/pkg/errors
 		cause := errors.Cause(err)

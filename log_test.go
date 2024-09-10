@@ -19,7 +19,7 @@ var (
 
 func setupObserver(level zap.AtomicLevel) (zap.Option, *observer.ObservedLogs) {
 	core, logs := observer.New(level)
-	opts := zap.WrapCore(func(c zapcore.Core) zapcore.Core {
+	opts := zap.WrapCore(func(_ zapcore.Core) zapcore.Core {
 		return core
 	})
 	return opts, logs
@@ -67,12 +67,13 @@ func Test_GetZapLogLevel(t *testing.T) {
 	for i := range levels {
 		testCase := levels[i]
 		t.Run(testCase.level, func(t *testing.T) {
+			t.Parallel()
 			is := require.New(t)
+
 			l := log.GetZapLogLevel(testCase.level)
 			is.Equal(l, testCase.zapLevel)
 		})
 	}
-
 }
 
 func Test_New(t *testing.T) {

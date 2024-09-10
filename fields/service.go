@@ -21,6 +21,6 @@ func (s *ServiceField) MarshalLogObject(enc zapcore.ObjectEncoder) error {
 
 // Service returns ECS service as zap.Field
 // https://www.elastic.co/guide/en/ecs/current/ecs-service.html
-func Service(name string, version string) zapcore.Field {
+func Service(name, version string) zapcore.Field {
 	return zap.Object("service", &ServiceField{Name: name, Version: version})
 }
