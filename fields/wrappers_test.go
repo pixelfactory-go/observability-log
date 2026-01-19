@@ -1,7 +1,7 @@
 package fields_test
 
 import (
-	"fmt"
+	"errors"
 	"testing"
 	"time"
 
@@ -174,7 +174,7 @@ func Test_Wrapper_Any(t *testing.T) {
 func Test_Wrapper_Error(t *testing.T) {
 	t.Parallel()
 	is := require.New(t)
-	err := fmt.Errorf("test error")
+	err := errors.New("test error")
 	b := fields.Error(err)
 	is.NotEmpty(b)
 	is.Equal(b, zap.Error(err))
@@ -183,7 +183,7 @@ func Test_Wrapper_Error(t *testing.T) {
 func Test_Wrapper_NamedError(t *testing.T) {
 	t.Parallel()
 	is := require.New(t)
-	err := fmt.Errorf("test error")
+	err := errors.New("test error")
 	b := fields.NamedError("key", err)
 	is.NotEmpty(b)
 	is.Equal(b, zap.NamedError("key", err))

@@ -15,14 +15,17 @@ import (
 )
 
 // zapcore.Level to sentry.Level map.
+//
+//nolint:gochecknoglobals // Package-level mapping constant used for level translation
 var zapLevelToSentrySeverity = map[zapcore.Level]sentry.Level{
-	zapcore.DebugLevel:  sentry.LevelDebug,
-	zapcore.InfoLevel:   sentry.LevelInfo,
-	zapcore.WarnLevel:   sentry.LevelWarning,
-	zapcore.ErrorLevel:  sentry.LevelError,
-	zapcore.DPanicLevel: sentry.LevelFatal,
-	zapcore.PanicLevel:  sentry.LevelFatal,
-	zapcore.FatalLevel:  sentry.LevelFatal,
+	zapcore.DebugLevel:   sentry.LevelDebug,
+	zapcore.InfoLevel:    sentry.LevelInfo,
+	zapcore.WarnLevel:    sentry.LevelWarning,
+	zapcore.ErrorLevel:   sentry.LevelError,
+	zapcore.DPanicLevel:  sentry.LevelFatal,
+	zapcore.PanicLevel:   sentry.LevelFatal,
+	zapcore.FatalLevel:   sentry.LevelFatal,
+	zapcore.InvalidLevel: sentry.LevelInfo, // Default to Info for invalid levels
 }
 
 // errorKey is zap.Field key for ecs.Error.
@@ -50,6 +53,7 @@ func SetFlushTimeout(timeout time.Duration) Option {
 // Core struct.
 type Core struct {
 	zapcore.LevelEnabler
+
 	client             *sentry.Client
 	sentryFlushTimeout time.Duration
 	fields             []zapcore.Field
@@ -96,7 +100,7 @@ func (c *Core) Check(entry zapcore.Entry, checked *zapcore.CheckedEntry) *zapcor
 
 // Write converts entry to Sentry event and send it.
 //
-//nolint:cyclop,funlen // Core function for Sentry integration requires complex field processing
+//nolint:gocognit // Core function for Sentry integration requires complex field processing
 func (c *Core) Write(entry zapcore.Entry, fields []zapcore.Field) error {
 	// Create a Sentry Event.
 	event := sentry.NewEvent()

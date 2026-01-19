@@ -12,9 +12,10 @@ import (
 	"go.pixelfactory.io/pkg/observability/log"
 )
 
-var (
-	message        = "test log message"
-	zapStringField = zap.String("testKey", "testValue")
+const (
+	message   = "test log message"
+	testKey   = "testKey"
+	testValue = "testValue"
 )
 
 func setupObserver(level zap.AtomicLevel) (zap.Option, *observer.ObservedLogs) {
@@ -99,16 +100,16 @@ func Test_With(t *testing.T) {
 	is := require.New(t)
 	logger, logs := setupLogger()
 
-	logger = logger.With(zapStringField)
+	logger = logger.With(zap.String(testKey, testValue))
 	logger.Info("")
 
 	if logs.Len() != 1 {
 		t.Errorf("No logs")
 	} else {
 		entry := logs.All()[0]
-		is.Equal(entry.Context, []zapcore.Field{
-			zapStringField,
-		})
+		is.Equal([]zapcore.Field{
+			zap.String(testKey, testValue),
+		}, entry.Context)
 	}
 }
 
@@ -123,7 +124,7 @@ func Test_Debug(t *testing.T) {
 		t.Errorf("No logs")
 	} else {
 		entry := logs.All()[0]
-		is.Equal(entry.Level, zap.DebugLevel)
+		is.Equal(zap.DebugLevel, entry.Level)
 		is.Equal(message, entry.Message)
 	}
 }
@@ -139,7 +140,7 @@ func Test_Info(t *testing.T) {
 		t.Errorf("No logs")
 	} else {
 		entry := logs.All()[0]
-		is.Equal(entry.Level, zap.InfoLevel)
+		is.Equal(zap.InfoLevel, entry.Level)
 		is.Equal(message, entry.Message)
 	}
 }
@@ -155,7 +156,7 @@ func Test_Warn(t *testing.T) {
 		t.Errorf("No logs")
 	} else {
 		entry := logs.All()[0]
-		is.Equal(entry.Level, zap.WarnLevel)
+		is.Equal(zap.WarnLevel, entry.Level)
 		is.Equal(message, entry.Message)
 	}
 }
@@ -171,7 +172,7 @@ func Test_Error(t *testing.T) {
 		t.Errorf("No logs")
 	} else {
 		entry := logs.All()[0]
-		is.Equal(entry.Level, zap.ErrorLevel)
+		is.Equal(zap.ErrorLevel, entry.Level)
 		is.Equal(message, entry.Message)
 	}
 }
@@ -199,7 +200,7 @@ func Test_Panic(t *testing.T) {
 		t.Errorf("No logs")
 	} else {
 		entry := logs.All()[0]
-		is.Equal(entry.Level, zap.PanicLevel)
+		is.Equal(zap.PanicLevel, entry.Level)
 		is.Equal(message, entry.Message)
 	}
 }
