@@ -211,7 +211,7 @@ This logger outputs logs following [Elastic Common Schema (ECS) v1.5.0](https://
 
 ### Prerequisites
 
-- Go 1.23 or higher
+- Go 1.24 or higher
 - golangci-lint v2.8.0 or higher
 
 ### Available Commands

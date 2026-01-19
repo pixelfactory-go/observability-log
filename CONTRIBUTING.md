@@ -41,7 +41,7 @@ If you find a bug or have a feature request:
 
 ### Prerequisites
 
-- **Go 1.23 or higher**: [Download](https://go.dev/dl/)
+- **Go 1.24 or higher**: [Download](https://go.dev/dl/)
 - **golangci-lint v2.8.0 or higher**: [Installation guide](https://golangci-lint.run/docs/welcome/install/)
 - **Make**: Usually pre-installed on Unix systems
 
