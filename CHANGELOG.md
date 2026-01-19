@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1](https://github.com/pixelfactory-go/observability-log/compare/v1.3.0...v1.3.1) (2026-01-19)
+
+
+### Bug Fixes
+
+* remove deprecated package-name parameter from release-please ([#9](https://github.com/pixelfactory-go/observability-log/issues/9)) ([cf27170](https://github.com/pixelfactory-go/observability-log/commit/cf271700e404940604ab75b2f322aaccb944d539))
+
 ## [Unreleased]
 
 ### Added
