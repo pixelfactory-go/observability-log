@@ -1,3 +1,4 @@
+// Package main demonstrates the usage of the observability log package with various features.
 package main
 
 import (
@@ -62,7 +63,7 @@ func main() {
 		logger.Fatal("An error occurred while sending request", fields.Error(err))
 	}
 
-	defer response.Body.Close()
+	defer func() { _ = response.Body.Close() }()
 
 	logger.Info("Sent Http Request", fields.HTTPRequest(request))
 	logger.Info("Got Http Response", fields.HTTPResponse(response))

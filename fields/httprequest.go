@@ -1,3 +1,4 @@
+// Package fields provides ECS-compliant field helpers for structured logging.
 package fields
 
 import (

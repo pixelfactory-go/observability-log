@@ -1,3 +1,4 @@
+// Package zapsentry provides a Zap logger core that integrates with Sentry for error tracking.
 package zapsentry
 
 import (
@@ -94,6 +95,8 @@ func (c *Core) Check(entry zapcore.Entry, checked *zapcore.CheckedEntry) *zapcor
 }
 
 // Write converts entry to Sentry event and send it.
+//
+//nolint:cyclop,funlen // Core function for Sentry integration requires complex field processing
 func (c *Core) Write(entry zapcore.Entry, fields []zapcore.Field) error {
 	// Create a Sentry Event.
 	event := sentry.NewEvent()

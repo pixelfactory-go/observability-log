@@ -37,7 +37,7 @@ func Test_HTTPResponse(t *testing.T) {
 	handler(w, req)
 
 	resp := w.Result()
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	respField := fields.HTTPResponse(resp)
 	is.NotEmpty(respField)

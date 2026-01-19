@@ -1,3 +1,4 @@
+// Package log provides a structured logging interface with ECS formatting and optional Sentry integration.
 package log
 
 import (
