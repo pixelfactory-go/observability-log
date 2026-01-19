@@ -2,7 +2,7 @@ module go.pixelfactory.io/pkg/observability/log
 
 go 1.24.0
 
-toolchain go1.24.7
+toolchain go1.24.12
 
 require (
 	github.com/getsentry/sentry-go v0.41.0
