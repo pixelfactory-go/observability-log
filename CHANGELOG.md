@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.2](https://github.com/pixelfactory-go/observability-log/compare/v1.3.1...v1.3.2) (2026-01-21)
+
+
+### Bug Fixes
+
+* add name to test job in CI configuration ([#14](https://github.com/pixelfactory-go/observability-log/issues/14)) ([adcf7c6](https://github.com/pixelfactory-go/observability-log/commit/adcf7c6e8dc998cd4e8e2f6bc21af4b7d1c6b541))
+
 ## [1.3.1](https://github.com/pixelfactory-go/observability-log/compare/v1.3.0...v1.3.1) (2026-01-19)
 
 
