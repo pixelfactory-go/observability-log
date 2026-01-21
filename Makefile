@@ -33,7 +33,7 @@ ifdef FUZZ_TEST
 	if [ -z "$$FUZZ_PKG" ] || [ "$$FUZZ_PKG" = "$$FUZZ_NAME" ]; then \
 		FUZZ_PKG="."; \
 	fi; \
-	go test -run=^$$ -fuzz=$$FUZZ_NAME -fuzztime=30s $$FUZZ_PKG
+	go test -run=^$$ -fuzz=^$$FUZZ_NAME$$ -fuzztime=30s $$FUZZ_PKG
 	@echo "Done!"
 else
 	@echo "Running all fuzz tests..."
@@ -41,7 +41,7 @@ else
 		pkg=$$(dirname $$file); \
 		for test in $$(grep -h '^func Fuzz' $$file 2>/dev/null | sed 's/func \(Fuzz[^(]*\).*/\1/'); do \
 			echo "Running $$test in $$pkg..."; \
-			go test -run=^$$ -fuzz=$$test -fuzztime=30s $$pkg || exit 1; \
+			go test -run=^$$ -fuzz=^$$test$$ -fuzztime=30s $$pkg || exit 1; \
 		done; \
 	done
 	@echo "All fuzz tests completed successfully!"
