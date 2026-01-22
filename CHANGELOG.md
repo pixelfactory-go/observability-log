@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.3](https://github.com/pixelfactory-go/observability-log/compare/v1.4.2...v1.4.3) (2026-01-22)
+
+
+### Bug Fixes
+
+* add missing release history to CHANGELOG ([#25](https://github.com/pixelfactory-go/observability-log/issues/25)) ([a8f1019](https://github.com/pixelfactory-go/observability-log/commit/a8f10196ec15d6e0c2bdc974407e4caf446092b1))
+
 ## [1.4.2](https://github.com/pixelfactory-go/observability-log/compare/v1.4.1...v1.4.2) (2026-01-22)
 
 
