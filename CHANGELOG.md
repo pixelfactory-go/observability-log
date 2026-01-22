@@ -33,44 +33,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * remove deprecated package-name parameter from release-please ([#9](https://github.com/pixelfactory-go/observability-log/issues/9)) ([cf27170](https://github.com/pixelfactory-go/observability-log/commit/cf271700e404940604ab75b2f322aaccb944d539))
 
-## [Unreleased]
+## [1.3.0](https://github.com/pixelfactory-go/observability-log/compare/v1.2.0...v1.3.0) (2024-09-10)
 
-### Added
-- Comprehensive documentation including README, CONTRIBUTING, and CHANGELOG
-- CI/CD workflow consolidation with test matrix for Go 1.24.x and 1.25.x
-- Release automation with release-please
-- Enhanced Makefile with build and help targets
-- Code quality improvements with golangci-lint v2 configuration
 
-### Changed
-- Updated golangci-lint configuration to v2 format with comprehensive linter settings
-- Updated Go version support to 1.23 minimum
-- Updated all dependencies to latest versions
-- Improved CI/CD workflows for better efficiency
+### Bug Fixes
 
-## [0.3.0] - 2024-10-01
+* update to go version 1.23 ([#7](https://github.com/pixelfactory-go/observability-log/issues/7)) ([e995bdf](https://github.com/pixelfactory-go/observability-log/commit/e995bdf66e13adb71e50ea2dd33773c25758ed70))
 
-### Changed
-- Updated ecszap to version v0.3.0
-- Dependency updates for improved compatibility
+## [1.2.0](https://github.com/pixelfactory-go/observability-log/compare/v1.1.2...v1.2.0) (2024-02-19)
 
-## [0.2.0] - 2023-05-15
 
-### Changed
-- Return struct instead of interface for better type safety
-- Updated to Go version 1.23
+### Features
 
-## [0.1.0] - 2020-07-31
+* return struct not interface ([#6](https://github.com/pixelfactory-go/observability-log/issues/6)) ([6519497](https://github.com/pixelfactory-go/observability-log/commit/6519497941909b3c54740b8938d3fa5d089d563e))
 
-### Added
-- Initial release with ECS v1.5.0 support
-- Zap-based structured logging
-- Sentry integration for error tracking
-- Field helpers for HTTP requests/responses
-- User agent parsing
-- Service and source field helpers
+## [1.1.2](https://github.com/pixelfactory-go/observability-log/compare/v1.1.0...v1.1.2) (2024-01-04)
 
-[Unreleased]: https://github.com/pixelfactory-go/observability-log/compare/v0.3.0...HEAD
-[0.3.0]: https://github.com/pixelfactory-go/observability-log/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/pixelfactory-go/observability-log/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/pixelfactory-go/observability-log/releases/tag/v0.1.0
+
+### Bug Fixes
+
+* update ecszap to version v0.3.0 ([#5](https://github.com/pixelfactory-go/observability-log/issues/5)) ([aaf28ad](https://github.com/pixelfactory-go/observability-log/commit/aaf28ad04277a1328f53cf834e2ca8a64e66e662))
+
+## [1.1.0](https://github.com/pixelfactory-go/observability-log/compare/v1.0.1...v1.1.0) (2023-10-19)
+
+
+### Features
+
+* use fields package ([#3](https://github.com/pixelfactory-go/observability-log/issues/3)) ([a8e6ffc](https://github.com/pixelfactory-go/observability-log/commit/a8e6ffccd87d54ea077d226526e63fc9e010f90e))
+
+## [1.0.1](https://github.com/pixelfactory-go/observability-log/compare/v1.0.0...v1.0.1) (2023-08-20)
+
+
+### Bug Fixes
+
+* update README ([#2](https://github.com/pixelfactory-go/observability-log/issues/2)) ([fb61295](https://github.com/pixelfactory-go/observability-log/commit/fb612956907766589ceb4d441651d303949d28f3))
+
+## [1.0.0](https://github.com/pixelfactory-go/observability-log/releases/tag/v1.0.0) (2023-08-17)
+
+
+### Features
+
+* add goreleaser workflow ([c30d3ac](https://github.com/pixelfactory-go/observability-log/commit/c30d3aceedf8163a11457e5613582b7045cb6398))
