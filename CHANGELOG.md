@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/pixelfactory-go/observability-log/compare/v1.4.3...v1.5.0) (2026-01-29)
+
+
+### Features
+
+* enhance SECURITY.md with comprehensive vulnerability disclosure policy ([#27](https://github.com/pixelfactory-go/observability-log/issues/27)) ([83866f1](https://github.com/pixelfactory-go/observability-log/commit/83866f14eacab88cb9d0ead65107cd4354982f2d))
+
 ## [1.4.3](https://github.com/pixelfactory-go/observability-log/compare/v1.4.2...v1.4.3) (2026-01-22)
 
 
