@@ -1,16 +1,14 @@
 module go.pixelfactory.io/pkg/observability/log
 
-go 1.24.0
-
-toolchain go1.24.12
+go 1.25.0
 
 require (
-	github.com/getsentry/sentry-go v0.42.0
+	github.com/getsentry/sentry-go v0.46.2
 	github.com/mssola/user_agent v0.6.0
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.11.1
 	go.elastic.co/ecszap v1.0.3
-	go.uber.org/zap v1.27.1
+	go.uber.org/zap v1.28.0
 )
 
 require (
